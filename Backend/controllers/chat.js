@@ -25,51 +25,39 @@ const extractPdfText = async (pdfUrl) => {
 };
 // Function to call Gemini API
 const askGemini = async (messages, systemInstruction) => {
-  try {
-    // Convert chat history into text format
-    let conversationText = systemInstruction + '\n\n';
+  let conversationText = systemInstruction + '\n\n';
+  messages.forEach((msg) => {
+    if (msg.role === 'user') {
+      conversationText += `User: ${msg.content}\n`;
+    } else {
+      conversationText += `Assistant: ${msg.content}\n`;
+    }
+  });
 
-    messages.forEach((msg) => {
-      if (msg.role === 'user') {
-        conversationText += `User: ${msg.content}\n`;
+  const maxRetries = 3;
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await axios.post(
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+        {
+          contents: [{ parts: [{ text: conversationText }] }],
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          params: { key: process.env.GEMINI_API_KEY },
+        }
+      );
+      return response.data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+    } catch (error) {
+      if ((error.response?.status === 429 || error.response?.status === 503) && attempt < maxRetries - 1) {
+        const waitMs = (attempt + 1) * 5000;
+        console.log(`Rate limited. Retrying in ${waitMs / 1000}s...`);
+        await new Promise(resolve => setTimeout(resolve, waitMs));
       } else {
-        conversationText += `Assistant: ${msg.content}\n`;
+        console.error('Error from Gemini:', error.response?.data || error.message);
+        throw new Error('Gemini API failed. Please wait a moment and try again.');
       }
-    });
-    // console.log(conversationText);
-    const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
-      {
-        contents: [
-          {
-            parts: [
-              {
-                text: conversationText,
-              },
-            ],
-          },
-        ],
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        params: {
-          key: process.env.GEMINI_API_KEY,
-        },
-      }
-    );
-    // console.log(response);
-    const output =
-      response.data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
-
-    return output;
-  } catch (error) {
-    console.error(
-      'Error from Gemini:',
-      error.response?.data || error.message
-    );
-    throw new Error('Gemini API failed');
+    }
   }
 };
 

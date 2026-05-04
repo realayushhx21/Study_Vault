@@ -11,6 +11,13 @@ const resourceSchema = new mongoose.Schema({
     uploadedByEmail: { type: String, required: true },
     reviews: [reviewSchema],
     averageRating: { type: Number, default: 0 },
+    // AI-generated metadata
+    aiSummary: { type: String, default: '' },
+    keyTopics: [{ type: String }],
+    difficulty: { type: String, enum: ['Beginner', 'Intermediate', 'Advanced', ''], default: '' },
+    // Analytics fields
+    viewCount: { type: Number, default: 0 },
+    downloadCount: { type: Number, default: 0 },
     createdAt: { type: Date, default: Date.now }
 });
 

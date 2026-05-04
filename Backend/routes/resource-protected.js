@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authorize = require('../middlewares/authorize');
 const upload = require('../middlewares/multer-fileupload');
-const {uploadResource, getMyResources, updateResource, addReview, deleteResource} = require('../controllers/resource-protected');
+const {uploadResource, getMyResources, updateResource, addReview, deleteResource, trackDownload} = require('../controllers/resource-protected');
 const {uploadResourceValidationMiddleware, updateResourceValidationMiddleware, addReviewValidationMiddleware} = require('../middlewares/resource-protected-validation');
 
 router.use(authorize);
@@ -12,5 +12,7 @@ router.get('/get-my-resources', getMyResources);
 router.put('/update-my-resource/:id',upload.single('pdf'), updateResourceValidationMiddleware,  updateResource);
 router.post('/add-review/:id',addReviewValidationMiddleware, addReview);
 router.delete('/delete-my-resource/:id', deleteResource);
+router.post('/track-download/:id', trackDownload);
 
 module.exports = router;
+

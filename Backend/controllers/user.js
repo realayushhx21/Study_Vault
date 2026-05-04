@@ -7,7 +7,7 @@ const generateOTP = require('../utils/generateOTP');
 
 const register = async (req, res) => {
     console.log("Reached register controller");
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
     const userExist = await User.findOne({ email });
     if (userExist && userExist.isVerified) {
         return res.status(StatusCodes.CONFLICT).json({ success: false, msg: 'User exists already' });
@@ -21,6 +21,7 @@ const register = async (req, res) => {
         await User.create({
             email,
             password: hashpass,
+            name: name || '',
             otp,
             otpExpiresAt
         });
