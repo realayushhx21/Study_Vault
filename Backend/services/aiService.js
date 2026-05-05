@@ -16,7 +16,7 @@ const callGemini = async (prompt, retries = 3) => {
     for (let attempt = 0; attempt < retries; attempt++) {
         try {
             const response = await axios.post(
-                'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+                'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent',
                 {
                     contents: [{ parts: [{ text: prompt }] }],
                 },
@@ -27,9 +27,10 @@ const callGemini = async (prompt, retries = 3) => {
             );
             return response.data.candidates?.[0]?.content?.parts?.[0]?.text || '';
         } catch (error) {
-            if (error.response?.status === 429 && attempt < retries - 1) {
+            const status = error.response?.status;
+            if ((status === 429 || status === 503) && attempt < retries - 1) {
                 const waitMs = (attempt + 1) * 5000; // 5s, 10s, 15s
-                console.log(`Rate limited. Retrying in ${waitMs / 1000}s... (attempt ${attempt + 2}/${retries})`);
+                console.log(`AI Service: Error ${status}. Retrying in ${waitMs / 1000}s... (attempt ${attempt + 2}/${retries})`);
                 await new Promise(resolve => setTimeout(resolve, waitMs));
             } else {
                 throw error;
