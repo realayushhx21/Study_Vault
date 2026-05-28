@@ -1,4 +1,4 @@
-# 📘 Study Vault (v2.0)
+# 📘 Study Vault 
 
 Study Vault is a full-stack MERN platform for **sharing academic PDFs**—built for students who want a dedicated space to **upload notes**, **discover quality resources**, and learn faster with **AI-powered summaries, quizzes, and “chat with PDF”**.
 
