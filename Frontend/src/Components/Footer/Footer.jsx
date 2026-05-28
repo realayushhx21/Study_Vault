@@ -5,26 +5,26 @@ const Footer = () => {
   return (
     <footer  className='footer'>
       <div className='footer-made-by'>
-        Made by a Student for all the Students
+        Made by Students for all the Students
       </div>
       <div className='footer-copyright'>
         &copy; {new Date().getFullYear()} All rights reserved.
       </div>
-      <div className='footer-made-with'>
-        Made with <span className='footer-heart'>♥</span> by <b>Ashay Patil</b>
-      </div>
+      {/* <div className='footer-made-with'>
+        Made with <span className='footer-heart'>♥</span> by <b>Group - 15</b>
+      </div> */}
       <div className='footer-contact'>
-        Contact: <a href="mailto:ashaypatil2005@gmail.com" className='footer-contact-link'>ashaypatil2005@gmail.com</a>
+        Department: <a href="mailto:Ayushpatil2005@gmail.com" className='footer-contact-link'>Computer Engineering</a>
       </div>
       <div className='footer-github-link'>
-        GitHub:&nbsp;
+        VIT:&nbsp;
         <a
-          href="https://github.com/ashay-patil"
+          href="https://www.vit.edu"
           target="_blank"
           rel="noopener noreferrer"
           className='footer-github-link'
         >
-          https://github.com/ashay-patil
+          Vishwakarma Institute of Technology
         </a>
       </div>
     </footer>
