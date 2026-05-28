@@ -1193,34 +1193,6 @@ curl http://localhost:3000/api/v1/profile/USER_ID
 
 ---
 
-## 🎥 Demo Video & Screenshots
-
-### 📹 Demo Video
-
-[![Watch the video](Demo_Images/Video_Thumbnail.jpg)](https://youtu.be/1rG5nlNRSYU)
-
-### 📸 Screenshots
-
-#### Home Page
-![Home Page](Demo_Images/Home.jpg)
-
-#### Registration Page
-![Registration](Demo_Images/Register.jpg)
-
-#### Login Page
-![Login](Demo_Images/Login.jpg)
-
-#### Upload Notes
-![Upload](Demo_Images/Upload_A_Resource.jpg)
-
-#### Explore Page
-![Explore](Demo_Images/All_Resources.jpg)
-
-#### Review a Resource
-![Resource Details](Demo_Images/Review_A_Resource.jpg)
-
-#### My Resources
-![Mobile View](Demo_Images/My_Resources.jpg)
 
 ---
 
